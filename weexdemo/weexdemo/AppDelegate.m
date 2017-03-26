@@ -7,6 +7,8 @@
 //
 
 #import "AppDelegate.h"
+#import <WeexSDK/WeexSDK.h>
+#import "ViewController.h"
 
 @interface AppDelegate ()
 
@@ -14,9 +16,23 @@
 
 @implementation AppDelegate
 
+- (void)initWeex {
+    [WXAppConfiguration setAppGroup:@"ali"];
+    [WXAppConfiguration setAppName:@"weexdemo"];
+    [WXAppConfiguration setAppVersion:@"1.0"];
+    
+    [WXSDKEngine initSDKEnvironment];
+}
+
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+
+    [self initWeex];
+    
+    ViewController *vc=[[ViewController alloc]initWithJs:@"main.js"];
+    UINavigationController *nav=[[UINavigationController alloc]initWithRootViewController:vc];
+    self.window.rootViewController=nav;
+    
     return YES;
 }
 
